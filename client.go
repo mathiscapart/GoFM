@@ -26,8 +26,20 @@ type Client struct {
 	send chan []byte
 }
 
-func (c *Client) check() {
+func (c *Client) check(hub *Hub) {
 	defer func() {
+		switch hub.radio {
+		case "rap":
+			opsProcessedRap.Dec()
+		case "pop":
+			opsProcessedPop.Dec()
+		case "rock":
+			opsProcessedRock.Dec()
+		case "slow":
+			opsProcessedSlow.Dec()
+		case "gen":
+			opsProcessedGen.Dec()
+		}
 		c.hub.unregister <- c
 		c.conn.Close()
 	}()
@@ -43,6 +55,18 @@ func (c *Client) check() {
 }
 
 func serveWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
+	switch hub.radio {
+	case "rap":
+		opsProcessedRap.Inc()
+	case "pop":
+		opsProcessedPop.Inc()
+	case "rock":
+		opsProcessedRock.Inc()
+	case "slow":
+		opsProcessedSlow.Inc()
+	case "gen":
+		opsProcessedGen.Inc()
+	}
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Println(err)
@@ -50,5 +74,5 @@ func serveWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
 	}
 	client := &Client{hub: hub, conn: conn, send: make(chan []byte, 256)}
 	client.hub.register <- client
-	client.check()
+	client.check(hub)
 }

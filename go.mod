@@ -4,7 +4,9 @@ go 1.22
 
 require (
 	github.com/Jeffail/tunny v0.0.0-20171107125207-452a8e97d6a3 // indirect
+	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cassava/lackey v0.8.1 // indirect
+	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/dhowden/tag v0.0.0-20201120070457-d52dcb253c63 // indirect
 	github.com/facebookgo/symwalk v0.0.0-20150726040526-42004b9f3222 // indirect
 	github.com/go-audio/audio v1.0.0 // indirect
@@ -16,6 +18,10 @@ require (
 	github.com/goulash/osutil v1.0.1 // indirect
 	github.com/goulash/stat v1.0.0 // indirect
 	github.com/mattn/go-sqlite3 v1.14.22 // indirect
+	github.com/prometheus/client_golang v1.19.0 // indirect
+	github.com/prometheus/client_model v0.5.0 // indirect
+	github.com/prometheus/common v0.48.0 // indirect
+	github.com/prometheus/procfs v0.12.0 // indirect
 	github.com/tcolgate/mp3 v0.0.0-20170426193717-e79c5a46d300 // indirect
 	golang.org/x/crypto v0.18.0 // indirect
 	golang.org/x/net v0.20.0 // indirect

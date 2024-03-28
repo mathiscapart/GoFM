@@ -3,19 +3,10 @@ package db
 import (
 	"context"
 	"database/sql"
+	"gofm/models"
 	"log"
 	"time"
 )
-
-type Song struct {
-	Id      int    `json:"id"`
-	Theme   string `json:"theme"`
-	Artiste string `json:"artiste"`
-	Song    string `json:"song"`
-	Image   string `json:"image"`
-	Radio   string `json:"radio"`
-	Title   string `json:"title"`
-}
 
 func connection() *sql.DB {
 	conn, err := sql.Open("sqlite3", "database.db") // dsn
@@ -30,17 +21,20 @@ func Database() {
 	conn := connection()
 	timeout, cancelFunc := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancelFunc()
-	conn.PingContext(timeout)
+	err := conn.PingContext(timeout)
+	if err != nil {
+		return
+	}
 
 	const createTable string = `CREATE TABLE IF NOT EXISTS GoFM (id INTEGER PRIMARY KEY NOT NULL, theme VARCHAR (255), artiste VARCHAR (255), song VARCHAR (255), image VARCHAR (255))`
 
-	_, err := conn.Exec(createTable)
+	_, err = conn.Exec(createTable)
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-/*func InsertUser(value Song) {
+/*func InsertUser(value models.Song) {
 	conn := connection()
 	timeout, cancelFunc := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancelFunc()
@@ -68,14 +62,17 @@ func SelectTheme(theme string) *sql.Rows {
 	return query
 }
 
-func Row(theme string) []Song {
-	selectRap := SelectTheme(theme)
-	var all []Song
-	var song Song
-	selectRap.Scan(&song.Id, &song.Theme, &song.Artiste, &song.Song, &song.Image, &song.Radio, &song.Title)
+func Row(theme string) []models.Song {
+	selectMusic := SelectTheme(theme)
+	var all []models.Song
+	var song models.Song
+	err := selectMusic.Scan(&song.Id, &song.Theme, &song.Artiste, &song.Song, &song.Image, &song.Radio, &song.Title)
+	if err != nil {
+		return nil
+	}
 	all = append(all, song)
-	for selectRap.Next() {
-		if err := selectRap.Scan(&song.Id, &song.Theme, &song.Artiste, &song.Song, &song.Image, &song.Radio, &song.Title); err != nil {
+	for selectMusic.Next() {
+		if err := selectMusic.Scan(&song.Id, &song.Theme, &song.Artiste, &song.Song, &song.Image, &song.Radio, &song.Title); err != nil {
 			log.Println(err)
 		}
 		all = append(all, song)
