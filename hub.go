@@ -6,6 +6,7 @@ import (
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
 	"gofm/db"
+	"gofm/models"
 	"io"
 	"log"
 	"os"
@@ -22,9 +23,6 @@ type Hub struct {
 	register chan *Client
 
 	unregister chan *Client
-}
-
-func selectDB() {
 }
 
 func newHub(radio string) *Hub {
@@ -63,19 +61,21 @@ func (h *Hub) sendMusique() {
 }
 
 func (h *Hub) sendJSON() {
+	var songs []models.Song
 	if h.radio == "gen" {
 		clock := time.Now().Hour()
 		if 0 <= clock && clock < 6 {
-			h.radio = "rap"
+			songs = db.Row("rap")
 		} else if 6 <= clock && clock < 10 {
-			h.radio = "rock"
+			songs = db.Row("rock")
 		} else if 10 <= clock && clock < 18 {
-			h.radio = "pop"
+			songs = db.Row("pop")
 		} else if 18 <= clock && clock < 24 {
-			h.radio = "slow"
+			songs = db.Row("slow")
 		}
+	} else {
+		songs = db.Row(h.radio)
 	}
-	songs := db.Row(h.radio)
 	for _, song := range songs {
 		file, err := os.Open("mp3/" + song.Song)
 		if err != nil {
