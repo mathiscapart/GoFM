@@ -1,0 +1,141 @@
+package main
+
+import (
+	"encoding/base64"
+	"errors"
+	"fmt"
+	_ "github.com/mattn/go-sqlite3"
+	"gofm/db"
+	"io"
+	"log"
+	"os"
+	"time"
+)
+
+type Hub struct {
+	clients map[*Client]bool
+
+	broadcast chan []byte
+
+	radio string
+
+	register chan *Client
+
+	unregister chan *Client
+}
+
+func selectDB() {
+}
+
+func newHub(radio string) *Hub {
+	return &Hub{
+		broadcast:  make(chan []byte),
+		register:   make(chan *Client),
+		radio:      radio,
+		unregister: make(chan *Client),
+		clients:    make(map[*Client]bool),
+	}
+}
+
+func (h *Hub) run() {
+	for {
+		select {
+		case client := <-h.register:
+			h.clients[client] = true
+		case client := <-h.unregister:
+			if _, ok := h.clients[client]; ok {
+				delete(h.clients, client)
+				close(client.send)
+			}
+		}
+	}
+}
+
+func (h *Hub) sendMusique() {
+	if h.radio == "rap" || h.radio == "pop" || h.radio == "rock" || h.radio == "slow" || h.radio == "gen" {
+		for {
+			h.sendJSON()
+		}
+	} else {
+		log.Println("Error theme song")
+	}
+
+}
+
+func (h *Hub) sendJSON() {
+	if h.radio == "gen" {
+		clock := time.Now().Hour()
+		if 0 <= clock && clock < 6 {
+			h.radio = "rap"
+		} else if 6 <= clock && clock < 10 {
+			h.radio = "rock"
+		} else if 10 <= clock && clock < 18 {
+			h.radio = "pop"
+		} else if 18 <= clock && clock < 24 {
+			h.radio = "slow"
+		}
+	}
+	songs := db.Row(h.radio)
+	for _, song := range songs {
+		file, err := os.Open("mp3/" + song.Song)
+		if err != nil {
+			log.Printf("error opening file: %v", err)
+			return
+		}
+
+		if err != nil {
+
+			log.Println(err)
+		}
+
+		defer func(file *os.File) {
+			err := file.Close()
+			if err != nil {
+				fmt.Println(err)
+			}
+		}(file)
+
+		secondBit := sizeFile("mp3/"+song.Song) / int64(longueurFile("mp3/"+song.Song))
+
+		buffer := make([]byte, secondBit*2+300)
+		for {
+			n, err := file.Read(buffer)
+			if err != nil {
+				if errors.Is(io.EOF, err) {
+					log.Println("End file")
+					break
+				}
+				log.Printf("error reading file: %v", err)
+				break
+			}
+			if n == 0 {
+				break
+			}
+			str := base64.StdEncoding.EncodeToString(buffer[:n])
+
+			//music := &Send{id:
+			//, partition: str}
+			musique := map[string]interface{}{
+				"id":        song.Id,
+				"partition": str,
+				"image":     song.Image,
+				"theme":     song.Theme,
+				"artiste":   song.Artiste,
+				"radio":     song.Radio,
+				"title":     song.Title,
+			}
+
+			for c := range h.clients {
+				go func(c *Client) {
+					err = c.conn.WriteJSON(musique)
+				}(c)
+			}
+
+			if err != nil {
+				return
+			}
+			time.Sleep((2 * time.Second) - 1)
+		}
+	}
+
+}
