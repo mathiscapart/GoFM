@@ -34,20 +34,6 @@ func Database() {
 	}
 }
 
-/*func InsertUser(value models.Song) {
-	conn := connection()
-	timeout, cancelFunc := context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancelFunc()
-	conn.PingContext(timeout)
-
-	const insertUser string = `INSERT INTO user (name, email, password) VALUES ($1, $2, $3)`
-
-	_, err := conn.Exec(insertUser, value.Name, value.Mail, value.Password)
-	if err != nil {
-		log.Fatal(err)
-	}
-}*/
-
 func SelectTheme(theme string) *sql.Rows {
 	conn := connection()
 	const selectUser string = `SELECT * FROM GoFM WHERE theme = $1`

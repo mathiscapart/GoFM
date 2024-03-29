@@ -62,8 +62,12 @@ func (h *Hub) sendMusique() {
 
 func (h *Hub) sendJSON() {
 	var songs []models.Song
-	if h.radio == "gen" {
-		clock := time.Now().Hour()
+	clock := time.Now().Hour()
+	clockMinute := time.Now().Minute()
+	fmt.Println("Start Radio", h.radio)
+	if clock == 7 && clockMinute >= 0 && clockMinute < 2 {
+		songs = db.Row("radio")
+	} else if h.radio == "gen" {
 		if 0 <= clock && clock < 6 {
 			songs = db.Row("rap")
 		} else if 6 <= clock && clock < 10 {
@@ -77,6 +81,14 @@ func (h *Hub) sendJSON() {
 		songs = db.Row(h.radio)
 	}
 	for _, song := range songs {
+		clock = time.Now().Hour()
+		clockMinute = time.Now().Minute()
+		fmt.Println("La Radio en cours : ", song.Radio, " à "+"Heure : ", clock, ", Minute : ", clockMinute)
+		if clock == 7 && clockMinute >= 0 && clockMinute < 2 && song.Radio != "GoFM" {
+			fmt.Println(song.Radio)
+			fmt.Println("break radio")
+			break
+		}
 		file, err := os.Open("mp3/" + song.Song)
 		if err != nil {
 			log.Printf("error opening file: %v", err)
@@ -113,8 +125,6 @@ func (h *Hub) sendJSON() {
 			}
 			str := base64.StdEncoding.EncodeToString(buffer[:n])
 
-			//music := &Send{id:
-			//, partition: str}
 			musique := map[string]interface{}{
 				"id":        song.Id,
 				"partition": str,
@@ -134,8 +144,7 @@ func (h *Hub) sendJSON() {
 			if err != nil {
 				return
 			}
-			time.Sleep((2 * time.Second) - 1)
+			time.Sleep((2 * time.Second) - 10)
 		}
 	}
-
 }

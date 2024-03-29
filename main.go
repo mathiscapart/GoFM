@@ -11,7 +11,7 @@ import (
 	"net/http"
 )
 
-func isOK(w http.ResponseWriter, r *http.Request) {
+func isOK(w http.ResponseWriter, _ *http.Request) {
 	_, err := io.WriteString(w, "ok")
 	if err != nil {
 		return
@@ -49,6 +49,7 @@ var (
 )
 
 func main() {
+	log.Println("--------- LANCEMENT DE GoFM -----------")
 	db.Database()
 	myRouter := mux.NewRouter().StrictSlash(true)
 	internRouter := mux.NewRouter().StrictSlash(true)
@@ -89,7 +90,9 @@ func main() {
 	internRouter.HandleFunc("/ping", isOK).Methods(http.MethodGet)
 
 	go func() {
+		log.Println("Server :2112 start ...")
 		log.Fatal(http.ListenAndServe(":2112", internRouter))
 	}()
+	log.Println("Server :8000 start ...")
 	log.Fatal(http.ListenAndServe(":8000", myRouter))
 }
