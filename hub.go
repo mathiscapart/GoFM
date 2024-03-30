@@ -86,7 +86,7 @@ func (h *Hub) sendJSON() {
 		fmt.Println("La Radio en cours : ", song.Radio, " à "+"Heure : ", clock, ", Minute : ", clockMinute)
 		if clock == 7 && clockMinute >= 0 && clockMinute < 2 && song.Radio != "GoFM" {
 			fmt.Println(song.Radio)
-			fmt.Println("break radio")
+			fmt.Println("break radio for Horoscope")
 			break
 		}
 		file, err := os.Open("mp3/" + song.Song)

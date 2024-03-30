@@ -1,7 +1,3 @@
-// Copyright 2013 The Gorilla WebSocket Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-
 package main
 
 import (
@@ -41,7 +37,10 @@ func (c *Client) check(hub *Hub) {
 			opsProcessedGen.Dec()
 		}
 		c.hub.unregister <- c
-		c.conn.Close()
+		err := c.conn.Close()
+		if err != nil {
+			return
+		}
 	}()
 	for {
 		_, _, err := c.conn.ReadMessage()

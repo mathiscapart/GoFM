@@ -112,7 +112,6 @@
         indiceRadio += 1
         socket.onmessage = function (event) {
             let music = JSON.parse(event.data)
-            console.log("plus radio ","btn-"+music['theme'])
             document.getElementById("btn-"+music['theme']).style.backgroundColor = "transparent"
         }
         if (indiceRadio >= themeRadio.length){
@@ -154,10 +153,8 @@
             }else {
                 document.getElementById("title").textContent = music['radio']
             }
-            console.log("btn-"+music['theme'])
             document.querySelector(".artisteSong").textContent = music['artiste']
             document.querySelector(".titleSong").textContent = music['title']
-
         }
         document.querySelector(".”btn_play”").style.display = "none"
         document.querySelector(".”btn_pause”").style.display = "block"
@@ -178,7 +175,6 @@
 
         indiceRadio = themeRadio.findIndex(theme => theme === radio);
 
-        console.log(indiceRadio)
 
         socket.onmessage = function (event) {
             let music = JSON.parse(event.data)
@@ -197,7 +193,6 @@
             }else {
                 document.getElementById("title").textContent = music['radio']
             }
-            console.log("btn-"+music['theme'])
             document.querySelector(".artisteSong").textContent = music['artiste']
             document.querySelector(".titleSong").textContent = music['title']
 

@@ -170,10 +170,15 @@ body{
     background: transparent;
     color: white;
     border: none;
+    padding: 5px;
+}
+
+.btn-header:hover{
+    border: 2px solid #cccccc;
+    border-radius: 11px;
 }
 
 .title-header{
     margin-bottom: 0;
     margin-top: 3px;
 }
-
