@@ -132,8 +132,19 @@ body{
     background: #0d1531;
     padding: 10px;
     display: flex;
+}
+
+.header-logo{
+    display: flex;
     justify-content: flex-start;
     align-items: center;
+}
+
+.div-btn-header{
+    width: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .changeButton{
@@ -149,3 +160,20 @@ body{
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+
+.div-btn{
+
+}
+
+.btn-header{
+    margin-left: 10px;
+    background: transparent;
+    color: white;
+    border: none;
+}
+
+.title-header{
+    margin-bottom: 0;
+    margin-top: 3px;
+}
+

@@ -7,14 +7,66 @@
     <link href=”https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css” rel=”stylesheet” integrity=”sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3″ crossorigin=”anonymous”>
 </head>
 <body class="container">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <div class="header">
-    <img src="../img/logo.jpg" class="logoRadio">
-    <h1 class="title" id="title">GoFM</h1>
+    <div class="header-logo">
+        <img src="../img/logo.jpg" class="logoRadio">
+        <h1 class="title" id="title">GoFM</h1>
+    </div>
+    <div class="div-btn-header">
+        <div>
+            <button class="btn-header" id="btn-gen" onclick="playRadio('gen')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25   " fill="white" class="bi bi-file-earmark-music-fill" viewBox="0 0 16 16">
+                    <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M11 6.64v1.75l-2 .5v3.61c0 .495-.301.883-.662 1.123C7.974 13.866 7.499 14 7 14s-.974-.134-1.338-.377C5.302 13.383 5 12.995 5 12.5s.301-.883.662-1.123C6.026 11.134 6.501 11 7 11c.356 0 .7.068 1 .196V6.89a1 1 0 0 1 .757-.97l1-.25A1 1 0 0 1 11 6.64"/>
+                </svg>
+                <p class="title-header">GoGEN</p>
+            </button>
+        </div>
+        <div>
+            <button class="btn-header" id="btn-pop" onclick="playRadio('pop')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-music-note-beamed" viewBox="0 0 16 16">
+                    <path d="M6 13c0 1.105-1.12 2-2.5 2S1 14.105 1 13s1.12-2 2.5-2 2.5.896 2.5 2m9-2c0 1.105-1.12 2-2.5 2s-2.5-.895-2.5-2 1.12-2 2.5-2 2.5.895 2.5 2"/>
+                    <path fill-rule="evenodd" d="M14 11V2h1v9zM6 3v10H5V3z"/>
+                    <path d="M5 2.905a1 1 0 0 1 .9-.995l8-.8a1 1 0 0 1 1.1.995V3L5 4z"/>
+                </svg>
+                <p class="title-header">GoPOP</p>
+            </button>
+        </div>
+        <div class="div-btn" id="btn-rap" onclick="playRadio('rap')">
+            <button class="btn-header">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-vinyl-fill" viewBox="0 0 16 16">
+                    <path d="M8 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4m0 3a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4 8a4 4 0 1 0 8 0 4 4 0 0 0-8 0"/>
+                </svg>
+                <p class="title-header">GoRAP</p>
+            </button>
+        </div>
+        <div>
+            <button class="btn-header" id="btn-slow" onclick="playRadio('slow')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-boombox" viewBox="0 0 16 16">
+                    <path d="M2.5 5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m2 0a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m7.5-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m1.5.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m-7-1a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm5.5 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"/>
+                    <path d="M11.5 13a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5m0-1a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3M5 10.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"/>
+                    <path d="M7 10.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0m-1 0a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
+                    <path d="M14 0a.5.5 0 0 1 .5.5V2h.5a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h12.5V.5A.5.5 0 0 1 14 0M1 3v3h14V3zm14 4H1v7h14z"/>
+                </svg>
+                <p class="title-header">GoSLOW</p>
+            </button>
+        </div>
+        <div>
+            <button class="btn-header" id="btn-rock" onclick="playRadio('rock')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-cassette" viewBox="0 0 16 16">
+                    <path d="M4 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2m9-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0M7 6a1 1 0 0 0 0 2h2a1 1 0 1 0 0-2z"/>
+                    <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2zM1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-.691l-1.362-2.724A.5.5 0 0 0 12 10H4a.5.5 0 0 0-.447.276L2.19 13H1.5a.5.5 0 0 1-.5-.5zM11.691 11l1 2H3.309l1-2z"/>
+                </svg>
+                <p class="title-header">GoROCK</p>
+            </button>
+        </div>
+    </div>
 </div>
 <div class="centerDiv">
     <div class="boxChangeMusic">
         <button type="button" onclick="minusRadio()" class="changeButton">
-            <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="currentColor " class="bi bi-chevron-double-left" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
             <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
         </svg></button>
@@ -58,6 +110,11 @@
 
     function previousRadio(){
         indiceRadio += 1
+        socket.onmessage = function (event) {
+            let music = JSON.parse(event.data)
+            console.log("plus radio ","btn-"+music['theme'])
+            document.getElementById("btn-"+music['theme']).style.backgroundColor = "transparent"
+        }
         if (indiceRadio >= themeRadio.length){
             indiceRadio = 0
         }
@@ -66,6 +123,7 @@
 
     function minusRadio(){
         indiceRadio -= 1
+
         if (indiceRadio < 0){
             indiceRadio = themeRadio.length - 1
         }
@@ -96,6 +154,7 @@
             }else {
                 document.getElementById("title").textContent = music['radio']
             }
+            console.log("btn-"+music['theme'])
             document.querySelector(".artisteSong").textContent = music['artiste']
             document.querySelector(".titleSong").textContent = music['title']
 
@@ -105,9 +164,46 @@
     }
 
     function stop(){
-        socket.close()
         document.querySelector(".”btn_play”").style.display = "block"
         document.querySelector(".”btn_pause”").style.display = "none"
+
+        socket.close()
+    }
+
+    function playRadio(radio){
+        if (socket){
+            stop()
+        }
+        socket = new WebSocket("ws://localhost:8000/"+radio);
+
+        indiceRadio = themeRadio.findIndex(theme => theme === radio);
+
+        console.log(indiceRadio)
+
+        socket.onmessage = function (event) {
+            let music = JSON.parse(event.data)
+            part = music.data
+            const audio = new window.AudioContext();
+
+            audio.decodeAudioData(base64ToArrayBuffer(music['partition']), (audioBuffer) => {
+                const source = audio.createBufferSource();
+                source.buffer = audioBuffer
+                source.connect(audio.destination)
+                source.start()
+            })
+            document.getElementById("imgSong").src = "/gofm/img/"+ music['theme'] + "/" + music['image']
+            if (radio === "gen"){
+                document.getElementById("title").textContent = "GoGEN"
+            }else {
+                document.getElementById("title").textContent = music['radio']
+            }
+            console.log("btn-"+music['theme'])
+            document.querySelector(".artisteSong").textContent = music['artiste']
+            document.querySelector(".titleSong").textContent = music['title']
+
+        }
+        document.querySelector(".”btn_play”").style.display = "none"
+        document.querySelector(".”btn_pause”").style.display = "block"
     }
 
     /*document.querySelector('#startStream').addEventListener('click', function() {
@@ -123,6 +219,5 @@
 
 
 </script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js » integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p » crossorigin="anonymous"></script>
 </body>
 </html>
